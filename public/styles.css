@@ -1,0 +1,22 @@
+.level {
+  position: absolute;
+  height: 600px;
+  width: 1000px;
+  background-color: blueviolet;
+  top: 10%;
+  left: 15%;
+}
+
+.player {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  background-color: red;
+}
+
+.monster {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  background-color: yellow;
+}
