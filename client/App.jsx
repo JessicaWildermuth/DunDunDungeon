@@ -1,5 +1,7 @@
 import React from 'react';
-import axios from 'axios';
+// import axios from 'axios';
+// eslint-disable-next-line import/extensions
+import Level from './Level.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -12,7 +14,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        Working!
+        <Level />
       </div>
     );
   }
