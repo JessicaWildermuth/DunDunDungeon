@@ -1,10 +1,10 @@
 .level {
   position: absolute;
   height: 600px;
-  width: 1000px;
+  width: 600px;
   background-color: blueviolet;
   top: 10%;
-  left: 15%;
+  left: 30%;
 }
 
 .player {

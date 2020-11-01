@@ -59,6 +59,7 @@ class Monster extends React.Component {
 
   render() {
     const { top, left } = this.state;
+    window.monsterLocation = { top, left };
     const playerPosition = { top: `${top}%`, left: `${left}%` };
     return (
       <div className="monster" style={playerPosition} />
