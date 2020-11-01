@@ -7,6 +7,7 @@ class Monster extends React.Component {
       top: null,
       left: null,
     };
+    this.sendLocation = this.sendLocation.bind(this);
   }
 
   componentDidMount() {
@@ -54,15 +55,22 @@ class Monster extends React.Component {
           this.setState((state) => ({ left: state.left + 2 }));
         }
       }
+      this.sendLocation();
     }, 300);
+  }
+
+  sendLocation() {
+    const { top, left } = this.state;
+    const { getLocation } = this.props;
+    getLocation({ type: 'monster', top, left });
   }
 
   render() {
     const { top, left } = this.state;
     window.monsterLocation = { top, left };
-    const playerPosition = { top: `${top}%`, left: `${left}%` };
+    const monsterPosition = { top: `${top}%`, left: `${left}%` };
     return (
-      <div className="monster" style={playerPosition} />
+      <div className="monster" style={monsterPosition} />
     );
   }
 }

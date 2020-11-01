@@ -1,5 +1,4 @@
 import React from 'react';
-import distanceBetween from './helpers';
 
 class Player extends React.Component {
   constructor(props) {
@@ -9,7 +8,8 @@ class Player extends React.Component {
       left: 50,
     };
     this.move = this.move.bind(this);
-    this.getCenter = this.getCenter.bind(this);
+    // this.getCenter = this.getCenter.bind(this);
+    this.sendLocation = this.sendLocation.bind(this);
   }
 
   componentDidMount() {
@@ -32,13 +32,13 @@ class Player extends React.Component {
       }
       this.move(direction);
     });
-
   }
 
-  getCenter() {
+  sendLocation() {
     const { top, left } = this.state;
-    const center = { top: top + 4, left: left + 4 };
-    return center;
+    // eslint-disable-next-line react/prop-types
+    const { getLocation } = this.props;
+    getLocation({ type: 'player', top, left });
   }
 
   move(direction) {
@@ -76,15 +76,11 @@ class Player extends React.Component {
         this.setState((state) => ({ left: state.left + 2 }));
       }
     }
+    this.sendLocation();
   }
 
   render() {
-    // console.log(this.getCenter());
     const { top, left } = this.state;
-    // console.log(distanceBetween({ top, left }, window.monsterLocation));
-    if (distanceBetween({ top, left }, window.monsterLocation) < 8) {
-      alert('TOUCHING!');
-    }
     const playerPosition = { top: `${top}%`, left: `${left}%` };
     return (
       <div className="player" style={playerPosition} />
