@@ -27,3 +27,12 @@
   width: 50px;
   background-color: green;
 }
+
+.spellbook {
+  position: absolute;
+  height: 200px;
+  width: 200px;
+  background-color: orange;
+  top: 10%;
+  left: 5%;
+}

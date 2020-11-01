@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable react/prop-types */
 import React from 'react';
 
@@ -41,14 +42,14 @@ class Player extends React.Component {
         playerLocation.top += 2;
       }
     } else if (direction === 'right') {
-      if (playerLocation.left === 0 || playerLocation.left === 1) {
+      if (playerLocation.left === 0 || playerLocation.left === 1 || playerLocation.left === 1.5) {
         playerLocation.left = 0;
       } else {
         playerLocation.left -= 2;
       }
     } else if (direction === 'left') {
-      if (playerLocation.left === 94 || playerLocation.left === 95) {
-        playerLocation.left = 95;
+      if (playerLocation.left === 91.5 || playerLocation.left === 91 || playerLocation.left === 90) {
+        playerLocation.left = 91.5;
       } else {
         playerLocation.left += 2;
       }

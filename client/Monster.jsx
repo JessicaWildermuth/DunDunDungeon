@@ -20,25 +20,25 @@ class Monster extends React.Component {
         if (monsterLocation.top === 0 || monsterLocation.top === 1.5 || monsterLocation.top === 1) {
           monsterLocation.top = 0;
         } else {
-          monsterLocation.top -= 4;
+          monsterLocation.top -= 2;
         }
       } else if (randomDirection === 'bottom') {
         if (monsterLocation.top === 90 || monsterLocation.top === 91.5 || monsterLocation.top === 91) {
           monsterLocation.top = 91.5;
         } else {
-          monsterLocation.top += 4;
+          monsterLocation.top += 2;
         }
       } else if (randomDirection === 'right') {
-        if (monsterLocation.left === 0 || monsterLocation.left === 1) {
+        if (monsterLocation.left === 0 || monsterLocation.left === 1 || monsterLocation.left === 1.5) {
           monsterLocation.left = 0;
         } else {
-          monsterLocation.left -= 4;
+          monsterLocation.left -= 2;
         }
       } else if (randomDirection === 'left') {
-        if (monsterLocation.left === 94 || monsterLocation.left === 95) {
-          monsterLocation.left = 95;
+        if (monsterLocation.left === 91.5 || monsterLocation.left === 91 || monsterLocation.left === 90) {
+          monsterLocation.left = 91.5;
         } else {
-          monsterLocation.left += 4;
+          monsterLocation.left += 2;
         }
       }
       getLocation({ type: 'monster', top: monsterLocation.top, left: monsterLocation.left });
