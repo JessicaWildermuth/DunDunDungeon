@@ -11,12 +11,6 @@ class Spell extends React.Component {
   }
 
   render() {
-    // const { spellLocation } = this.props;
-    // if (spellLocation !== null) {
-    //   const location = { top: `${spellLocation.top}%`, left: `${spellLocation.left}%` };
-    //   return <div className="spell" style={location} />;
-    // }
-    // return null;
     const { spells } = this.props;
     return spells.map((spell) => {
       const { location } = spell;
