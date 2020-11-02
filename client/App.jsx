@@ -19,6 +19,7 @@ class App extends React.Component {
       spells: [],
       monsters: [],
       playerStats: { level: null, exp: null, health: null },
+      dead: false,
     };
     this.getLocation = this.getLocation.bind(this);
     this.checkOverlap = this.checkOverlap.bind(this);
@@ -83,21 +84,6 @@ class App extends React.Component {
     const {
       playerCenter, monsterCenter, spells, playerStats,
     } = this.state;
-    if (distanceBetween(playerCenter, monsterCenter) < 7.2) {
-      const updatePlayerHealth = playerStats.health - 1;
-      const updatedPlayerStats = { level: playerStats.level, exp: playerStats.exp, health: updatePlayerHealth };
-      this.setState({
-        playerStats: updatedPlayerStats,
-      }, () => {
-        if (playerStats.health === 0) {
-          alert('YOU HAVE DIED');
-          this.setState({
-            playerLocation: null,
-            playerCenter: null,
-          });
-        }
-      });
-    }
     spells.map((spell) => {
       if (distanceBetween(playerCenter, spell.center) < 7.2) {
         const { playerSpells } = this.state;
@@ -111,18 +97,34 @@ class App extends React.Component {
         });
       }
     });
+    if (distanceBetween(playerCenter, monsterCenter) < 7.2) {
+      const updatePlayerHealth = playerStats.health - 1;
+      const updatedPlayerStats = { level: playerStats.level, exp: playerStats.exp, health: updatePlayerHealth };
+      this.setState({
+        playerStats: updatedPlayerStats,
+      }, () => {
+        if (playerStats.health === 0) {
+          this.setState({
+            dead: true,
+          });
+        }
+      });
+    }
   }
 
   render() {
     const {
-      spells, playerLocation, monsterLocation, playerSpells,
+      spells, playerLocation, monsterLocation, playerSpells, dead,
     } = this.state;
-    return (
-      <div>
-        <Level getLocation={this.getLocation} spells={spells} playerLocation={playerLocation} monsterLocation={monsterLocation} />
-        <SpellBook playerSpells={playerSpells} />
-      </div>
-    );
+    if (!dead) {
+      return (
+        <div>
+          <Level getLocation={this.getLocation} spells={spells} playerLocation={playerLocation} monsterLocation={monsterLocation} />
+          <SpellBook playerSpells={playerSpells} />
+        </div>
+      );
+    }
+    return <div className="dead">YOU HAVE DIED</div>;
   }
 }
 

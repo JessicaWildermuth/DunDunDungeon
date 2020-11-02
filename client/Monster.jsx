@@ -5,6 +5,7 @@ import React from 'react';
 class Monster extends React.Component {
   constructor(props) {
     super(props);
+    this.monsterMovementInterval = null;
     this.state = {
 
     };
@@ -12,7 +13,7 @@ class Monster extends React.Component {
 
   componentDidMount() {
     const directions = ['top', 'left', 'bottom', 'right'];
-    setInterval(() => {
+    this.monsterMovementInterval = setInterval(() => {
       const { monsterLocation, getLocation } = this.props;
       const index = Math.floor(Math.random() * Math.floor(directions.length));
       const randomDirection = directions[index];
@@ -43,6 +44,10 @@ class Monster extends React.Component {
       }
       getLocation({ type: 'monster', top: monsterLocation.top, left: monsterLocation.left });
     }, 200);
+  }
+
+  componentWillUnmount() {
+    if (this.monsterMovementInterval) clearInterval(this.monsterMovementInterval);
   }
 
   render() {
