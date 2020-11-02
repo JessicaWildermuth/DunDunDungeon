@@ -18,6 +18,7 @@ class App extends React.Component {
       monsters: [],
       playerStats: { level: null, exp: null, health: null },
       dead: false,
+      level: 1,
     };
     this.getLocation = this.getLocation.bind(this);
     this.checkOverlap = this.checkOverlap.bind(this);
@@ -50,17 +51,20 @@ class App extends React.Component {
       playerCenter: { top: player.top + 4, left: player.left + 4 },
     });
 
-    const { monsters } = this.state;
-    const monsterTop = Math.floor(Math.random() * (91 - 0) + 0);
-    const monsterLeft = Math.floor(Math.random() * (96 - 0) + 0);
-    const monsterLocation = { top: monsterTop, left: monsterLeft };
-    const monsterCenter = { top: monsterTop + 4, left: monsterLeft + 4 };
-    const updatedMonsterList = monsters;
-    const monsterHealth = 5;
-    monsters.push({ location: monsterLocation, center: monsterCenter, health: monsterHealth });
-    this.setState({
-      monsters: updatedMonsterList,
-    });
+    const { level } = this.state;
+    for (let i = 0; i < level; i += 1) {
+      const { monsters } = this.state;
+      const monsterTop = Math.floor(Math.random() * (91 - 0) + 0);
+      const monsterLeft = Math.floor(Math.random() * (96 - 0) + 0);
+      const monsterLocation = { top: monsterTop, left: monsterLeft };
+      const monsterCenter = { top: monsterTop + 4, left: monsterLeft + 4 };
+      const updatedMonsterList = monsters;
+      const monsterHealth = 5;
+      monsters.push({ location: monsterLocation, center: monsterCenter, health: monsterHealth });
+      this.setState({
+        monsters: updatedMonsterList,
+      });
+    }
   }
 
   getLocation(obj) {

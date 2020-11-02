@@ -13,12 +13,12 @@ class Monster extends React.Component {
 
   componentDidMount() {
     const directions = ['top', 'left', 'bottom', 'right'];
+    const { getLocation, monsters } = this.props;
     this.monsterMovementInterval = setInterval(() => {
-      const { getLocation, monsters } = this.props;
-      const index = Math.floor(Math.random() * Math.floor(directions.length));
-      const randomDirection = directions[index];
       for (let i = 0; i < monsters.length; i += 1) {
         const theMonster = monsters[i];
+        const index = Math.floor(Math.random() * Math.floor(directions.length));
+        const randomDirection = directions[index];
         if (randomDirection === 'top') {
           if (theMonster.location.top === 0 || theMonster.location.top === 1.5 || theMonster.location.top === 1) {
             theMonster.location.top = 0;
