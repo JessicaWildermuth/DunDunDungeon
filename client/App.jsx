@@ -12,9 +12,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       playerLocation: null,
-      monsterLocation: null,
       playerCenter: null,
-      monsterCenter: null,
       playerSpells: [],
       spells: [],
       monsters: [],
@@ -58,10 +56,9 @@ class App extends React.Component {
     const monsterLocation = { top: monsterTop, left: monsterLeft };
     const monsterCenter = { top: monsterTop + 4, left: monsterLeft + 4 };
     const updatedMonsterList = monsters;
-    monsters.push({ location: monsterLocation, center: monsterCenter });
+    const monsterHealth = 5;
+    monsters.push({ location: monsterLocation, center: monsterCenter, health: monsterHealth });
     this.setState({
-      monsterLocation,
-      monsterCenter: { top: monsterLocation.top + 4, left: monsterLocation + 4 },
       monsters: updatedMonsterList,
     });
   }
@@ -73,16 +70,27 @@ class App extends React.Component {
         playerCenter: center,
       });
     } else if (obj.type === 'monster') {
+      const { monsters } = this.state;
+      const newMonsterList = monsters;
+      newMonsterList[obj.index].center = center;
       this.setState({
-        monsterCenter: center,
+        monsters: newMonsterList,
       });
     }
     this.checkOverlap();
   }
 
+  // checkSpellHit() {
+  //   const { playerCenter, monsters} = this.state;
+  //   for (let i = 0; i < monsters.length; i += 1) {
+  //     let monster = monsters[i];
+  //     if (distanceBetween(playerCenter, monster.center))
+  //   }
+  // }
+
   checkOverlap() {
     const {
-      playerCenter, monsterCenter, spells, playerStats,
+      playerCenter, spells, playerStats, monsters,
     } = this.state;
     spells.map((spell) => {
       if (distanceBetween(playerCenter, spell.center) < 7.2) {
@@ -97,29 +105,33 @@ class App extends React.Component {
         });
       }
     });
-    if (distanceBetween(playerCenter, monsterCenter) < 7.2) {
-      const updatePlayerHealth = playerStats.health - 1;
-      const updatedPlayerStats = { level: playerStats.level, exp: playerStats.exp, health: updatePlayerHealth };
-      this.setState({
-        playerStats: updatedPlayerStats,
-      }, () => {
-        if (playerStats.health === 0) {
-          this.setState({
-            dead: true,
-          });
-        }
-      });
+
+    for (let i = 0; i < monsters.length; i += 1) {
+      const monster = monsters[i];
+      if (distanceBetween(playerCenter, monster.center) < 7.2) {
+        const updatePlayerHealth = playerStats.health - 1;
+        const updatedPlayerStats = { level: playerStats.level, exp: playerStats.exp, health: updatePlayerHealth };
+        this.setState({
+          playerStats: updatedPlayerStats,
+        }, () => {
+          if (playerStats.health === 0) {
+            this.setState({
+              dead: true,
+            });
+          }
+        });
+      }
     }
   }
 
   render() {
     const {
-      spells, playerLocation, monsterLocation, playerSpells, dead,
+      spells, playerLocation, playerSpells, dead, monsters,
     } = this.state;
     if (!dead) {
       return (
         <div>
-          <Level getLocation={this.getLocation} spells={spells} playerLocation={playerLocation} monsterLocation={monsterLocation} />
+          <Level getLocation={this.getLocation} spells={spells} playerLocation={playerLocation} monsters={monsters} />
           <SpellBook playerSpells={playerSpells} />
         </div>
       );

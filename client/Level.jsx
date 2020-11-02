@@ -16,13 +16,13 @@ class Level extends React.Component {
   render() {
     // eslint-disable-next-line react/prop-types
     const {
-      getLocation, spells, playerLocation, monsterLocation,
+      getLocation, spells, playerLocation, monsters,
     } = this.props;
     return (
 
       <div className="level">
         <Player getLocation={getLocation} playerLocation={playerLocation} />
-        <Monster getLocation={getLocation} monsterLocation={monsterLocation} />
+        <Monster getLocation={getLocation} monsters={monsters} />
         {spells.length !== 0 ? <Spell getLocation={getLocation} spells={spells} /> : null}
 
       </div>
