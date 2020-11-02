@@ -38,7 +38,7 @@ class Monster extends React.Component {
             theMonster.location.left -= 2;
           }
         } else if (randomDirection === 'left') {
-          if (theMonster.location.left === 91.5 || theMonster.location.left === 91 || theMonster.location.left === 90) {
+          if (theMonster.location.left === 91.5 || theMonster.location.left === 91 || theMonster.location.left === 90 || theMonster.location === 90.5) {
             theMonster.location.left = 91.5;
           } else {
             theMonster.location.left += 2;

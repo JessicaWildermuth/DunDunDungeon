@@ -1,3 +1,8 @@
+html {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   background-color: black;
 }
@@ -92,4 +97,26 @@ h3 {
   position: absolute;
   left: -26px;
   top: -17px;
+}
+
+#playerStats {
+  color: red;
+}
+
+.playerHealth {
+  position: relative;
+  top: 670px;
+  left: 1000px;
+}
+
+.playerExp {
+  position: relative;
+  top: 690px;
+  left: 750px;
+}
+
+.playerLevel {
+  position: relative;
+  top: 707px;
+  left: 475px;
 }

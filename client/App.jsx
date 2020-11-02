@@ -2,7 +2,7 @@
 /* eslint-disable max-len */
 /* eslint-disable import/extensions */
 import React from 'react';
-// import axios from 'axios';
+import { Howl, Howler } from 'howler';
 import Level from './Level.jsx';
 import distanceBetween from './helpers';
 import SpellBook from './SpellBook.jsx';
@@ -88,6 +88,11 @@ class App extends React.Component {
   }
 
   checkSpellHit(spellName) {
+    const sound = new Howl({
+      src: 'nova2.mp3',
+    });
+
+    sound.play();
     this.setState({
       spellCast: true,
     }, this.endSpellCast);
@@ -144,7 +149,7 @@ class App extends React.Component {
     for (let i = 0; i < monsters.length; i += 1) {
       const monster = monsters[i];
       if (distanceBetween(playerCenter, monster.center) < 5) {
-        const updatePlayerHealth = playerStats.health - 1;
+        const updatePlayerHealth = playerStats.health - 0.5;
         const updatedPlayerStats = { level: playerStats.level, exp: playerStats.exp, health: updatePlayerHealth };
         this.setState({
           playerStats: updatedPlayerStats,
@@ -169,7 +174,22 @@ class App extends React.Component {
           <h1> DunDunDungeon Crawler</h1>
           <Level getLocation={this.getLocation} spells={spells} playerLocation={playerLocation} monsters={monsters} spellCast={spellCast} />
           <SpellBook playerSpells={playerSpells} checkSpellHit={this.checkSpellHit} />
-          <div id="playerStats"></div>
+          <div id="playerStats" className="playerLevel">
+            Player Level
+            {' '}
+            {playerStats.level}
+          </div>
+          <div id="playerStats" className="playerExp">
+            {' '}
+            Experience
+            {' '}
+            {playerStats.exp}
+          </div>
+          <div id="playerStats" className="playerHealth">
+            Health
+            {' '}
+            {playerStats.health}
+          </div>
         </div>
       );
     }

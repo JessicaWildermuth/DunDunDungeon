@@ -20,9 +20,9 @@ module.exports = {
         },
       },
       {
-        test: /\.(jpg|jpeg|png)$/,
+        test: /\.(jpg|jpeg|mp3|png)$/,
         use: {
-          loader: 'url-loader',
+          loader: 'file-loader',
         },
       },
     ],
