@@ -85,14 +85,21 @@ class App extends React.Component {
     this.checkOverlap();
   }
 
-  checkSpellHit() {
-    console.log('SPELL USED');
-    const { playerCenter, monsters } = this.state;
+  checkSpellHit(spellName) {
+    const { playerCenter, monsters, playerSpells } = this.state;
+    let spellDmg;
+    for (let i = 0; i < playerSpells.length; i += 1) {
+      const spell = playerSpells[i];
+      if (spell.type === spellName) {
+        spellDmg = spell.dmg;
+        break;
+      }
+    }
     for (let i = 0; i < monsters.length; i += 1) {
       const monster = monsters[i];
       console.log(distanceBetween(playerCenter, monster.center));
       if (distanceBetween(playerCenter, monster.center) < 20) {
-        monster.health -= 1;
+        monster.health -= spellDmg;
         if (monster.health === 0) {
           const updatedMonsterList = monsters;
           updatedMonsterList.splice(i, 1);

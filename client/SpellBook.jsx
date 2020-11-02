@@ -31,8 +31,9 @@ class SpellBook extends React.Component {
   useSpell(spell) {
     const { checkSpellHit } = this.props;
     const node = this.spellRef.current;
+    const spellName = node.className;
     if (node.id === spell) {
-      checkSpellHit();
+      checkSpellHit(spellName);
     }
   }
 
