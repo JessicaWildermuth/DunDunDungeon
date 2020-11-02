@@ -9,6 +9,7 @@ class SpellBook extends React.Component {
     this.state = {
 
     };
+    this.useSpell = this.useSpell.bind(this);
   }
 
   componentDidMount() {
@@ -28,9 +29,10 @@ class SpellBook extends React.Component {
   }
 
   useSpell(spell) {
+    const { checkSpellHit } = this.props;
     const node = this.spellRef.current;
     if (node.id === spell) {
-      alert('USE SPELL');
+      checkSpellHit();
     }
   }
 

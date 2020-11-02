@@ -22,6 +22,7 @@ class App extends React.Component {
     };
     this.getLocation = this.getLocation.bind(this);
     this.checkOverlap = this.checkOverlap.bind(this);
+    this.checkSpellHit = this.checkSpellHit.bind(this);
   }
 
   componentDidMount() {
@@ -84,13 +85,24 @@ class App extends React.Component {
     this.checkOverlap();
   }
 
-  // checkSpellHit() {
-  //   const { playerCenter, monsters} = this.state;
-  //   for (let i = 0; i < monsters.length; i += 1) {
-  //     let monster = monsters[i];
-  //     if (distanceBetween(playerCenter, monster.center))
-  //   }
-  // }
+  checkSpellHit() {
+    console.log('SPELL USED');
+    const { playerCenter, monsters } = this.state;
+    for (let i = 0; i < monsters.length; i += 1) {
+      const monster = monsters[i];
+      console.log(distanceBetween(playerCenter, monster.center));
+      if (distanceBetween(playerCenter, monster.center) < 20) {
+        monster.health -= 1;
+        if (monster.health === 0) {
+          const updatedMonsterList = monsters;
+          updatedMonsterList.splice(i, 1);
+          this.setState({
+            monsters: updatedMonsterList,
+          });
+        }
+      }
+    }
+  }
 
   checkOverlap() {
     const {
@@ -136,7 +148,7 @@ class App extends React.Component {
       return (
         <div>
           <Level getLocation={this.getLocation} spells={spells} playerLocation={playerLocation} monsters={monsters} />
-          <SpellBook playerSpells={playerSpells} />
+          <SpellBook playerSpells={playerSpells} checkSpellHit={this.checkSpellHit} />
         </div>
       );
     }
