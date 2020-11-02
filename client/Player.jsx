@@ -58,10 +58,17 @@ class Player extends React.Component {
   }
 
   render() {
-    const { playerLocation } = this.props;
+    const { playerLocation, spellCast } = this.props;
+    console.log(spellCast)
     if (playerLocation !== null) {
       const location = { top: `${playerLocation.top}%`, left: `${playerLocation.left}%` };
-      return <div className="player" style={location} />;
+      return (
+        <div className="player" style={location}>
+          {' '}
+          <img src="wizard.gif" alt="wizardPlayer" />
+          { spellCast ? <img id="nova" src="lightCast_96.gif" alt="novaCast" /> : null}
+        </div>
+      );
     }
     return null;
   }

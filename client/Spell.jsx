@@ -15,7 +15,13 @@ class Spell extends React.Component {
     return spells.map((spell) => {
       const { location } = spell;
       const spellLocation = { top: `${location.top}%`, left: `${location.left}%` };
-      return <div className="spell" style={spellLocation} />;
+      return (
+        <div className="spell" style={spellLocation}>
+          {' '}
+          <img src="spell.png" alt="spell" />
+          {' '}
+        </div>
+      );
     });
   }
 }

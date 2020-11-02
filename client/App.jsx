@@ -19,10 +19,12 @@ class App extends React.Component {
       playerStats: { level: null, exp: null, health: null },
       dead: false,
       level: 1,
+      spellCast: false,
     };
     this.getLocation = this.getLocation.bind(this);
     this.checkOverlap = this.checkOverlap.bind(this);
     this.checkSpellHit = this.checkSpellHit.bind(this);
+    this.endSpellCast = this.endSpellCast.bind(this);
   }
 
   componentDidMount() {
@@ -53,7 +55,7 @@ class App extends React.Component {
     });
 
     const { level } = this.state;
-    for (let i = 0; i < level; i += 1) {
+    for (let i = 0; i < level + 4; i += 1) {
       const { monsters } = this.state;
       const monsterTop = Math.floor(Math.random() * (91 - 0) + 0);
       const monsterLeft = Math.floor(Math.random() * (96 - 0) + 0);
@@ -86,6 +88,9 @@ class App extends React.Component {
   }
 
   checkSpellHit(spellName) {
+    this.setState({
+      spellCast: true,
+    }, this.endSpellCast);
     const { playerCenter, monsters, playerSpells } = this.state;
     let spellDmg;
     for (let i = 0; i < playerSpells.length; i += 1) {
@@ -97,8 +102,7 @@ class App extends React.Component {
     }
     for (let i = 0; i < monsters.length; i += 1) {
       const monster = monsters[i];
-      console.log(distanceBetween(playerCenter, monster.center));
-      if (distanceBetween(playerCenter, monster.center) < 20) {
+      if (distanceBetween(playerCenter, monster.center) < 11) {
         monster.health -= spellDmg;
         if (monster.health === 0) {
           const updatedMonsterList = monsters;
@@ -111,12 +115,20 @@ class App extends React.Component {
     }
   }
 
+  endSpellCast() {
+    setTimeout(() => {
+      this.setState({
+        spellCast: false,
+      });
+    }, 500);
+  }
+
   checkOverlap() {
     const {
       playerCenter, spells, playerStats, monsters,
     } = this.state;
     spells.map((spell) => {
-      if (distanceBetween(playerCenter, spell.center) < 7.2) {
+      if (distanceBetween(playerCenter, spell.center) < 5) {
         const { playerSpells } = this.state;
         const updatePlayerSpells = playerSpells;
         updatePlayerSpells.push(spell);
@@ -131,7 +143,7 @@ class App extends React.Component {
 
     for (let i = 0; i < monsters.length; i += 1) {
       const monster = monsters[i];
-      if (distanceBetween(playerCenter, monster.center) < 7.2) {
+      if (distanceBetween(playerCenter, monster.center) < 5) {
         const updatePlayerHealth = playerStats.health - 1;
         const updatedPlayerStats = { level: playerStats.level, exp: playerStats.exp, health: updatePlayerHealth };
         this.setState({
@@ -149,13 +161,15 @@ class App extends React.Component {
 
   render() {
     const {
-      spells, playerLocation, playerSpells, dead, monsters,
+      spells, playerLocation, playerSpells, dead, monsters, playerStats, spellCast,
     } = this.state;
     if (!dead) {
       return (
         <div>
-          <Level getLocation={this.getLocation} spells={spells} playerLocation={playerLocation} monsters={monsters} />
+          <h1> DunDunDungeon Crawler</h1>
+          <Level getLocation={this.getLocation} spells={spells} playerLocation={playerLocation} monsters={monsters} spellCast={spellCast} />
           <SpellBook playerSpells={playerSpells} checkSpellHit={this.checkSpellHit} />
+          <div id="playerStats"></div>
         </div>
       );
     }

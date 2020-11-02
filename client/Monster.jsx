@@ -48,7 +48,7 @@ class Monster extends React.Component {
           type: 'monster', top: theMonster.location.top, left: theMonster.location.left, index: i,
         });
       }
-    }, 200);
+    }, 100);
   }
 
   componentWillUnmount() {
@@ -59,7 +59,13 @@ class Monster extends React.Component {
     const { monsters } = this.props;
     return monsters.map((monster) => {
       const location = { top: `${monster.location.top}%`, left: `${monster.location.left}%` };
-      return <div className="monster" style={location} />;
+      return (
+        <div className="monster" style={location}>
+          {' '}
+          <img id="zombie" src="zombie.gif" alt="batMonster" />
+          {' '}
+        </div>
+      );
     });
   }
 }

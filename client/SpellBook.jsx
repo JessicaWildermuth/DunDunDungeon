@@ -42,15 +42,22 @@ class SpellBook extends React.Component {
     let count = 0;
     return (
       <div className="spellbook">
+        <img src="spellbook.png" alt="spellbook" />
+        <h3 id="spellName">Spells</h3>
+        <h3 id="spellDescription">Description</h3>
         { playerSpells.length !== 0
           ? playerSpells.map((spell) => {
             count += 1;
             return (
-              <button type="button" id="one" className={spell.type} ref={this.spellRef}>
-                {spell.type}
-                {' '}
-                {spell.dmg}
-              </button>
+              <div>
+                <button type="button" id="one" className={spell.type} ref={this.spellRef}>
+                  {spell.type}
+                  {' '}
+                </button>
+                <div className="description">
+                  Deal One Damage to Nearby Enemies
+                </div>
+              </div>
             );
           })
           : null}

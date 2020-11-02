@@ -1,3 +1,14 @@
+body {
+  background-color: black;
+}
+
+h1 {
+  position: absolute;
+  font-family: 'Nosifer', cursive;
+  color: red;
+  left: 29.5%;
+}
+
 .level {
   position: absolute;
   height: 600px;
@@ -11,28 +22,74 @@
   position: absolute;
   height: 50px;
   width: 50px;
-  background-color: red;
 }
 
 .monster {
   position: absolute;
-  height: 50px;
-  width: 50px;
-  background-color: yellow;
+  height: 30px;
+  width: 30px;
 }
 
 .spell {
   position: absolute;
   height: 50px;
   width: 50px;
-  background-color: green;
 }
 
 .spellbook {
   position: absolute;
   height: 200px;
   width: 200px;
-  background-color: orange;
   top: 10%;
   left: 5%;
+}
+
+button {
+  position: absolute;
+  top: 18%;
+  left: 30%;
+  background-color: transparent;
+  border: none;
+  font-family: 'Dancing Script', cursive;
+}
+
+h3 {
+  position: relative;
+  color: black;
+  font-family: 'Dancing Script', cursive;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+#spellName {
+  left: 31%;
+  top: -91%;
+}
+
+#spellDescription {
+  left: 84%;
+  top: -115%;
+}
+
+.description {
+  position: absolute;
+  top: 18%;
+  left: 87%;
+  font-size: 10px;
+  width: 100px;
+  font-family: 'Dancing Script', cursive;
+}
+
+#zombie {
+  text-align: center;
+  position: absolute;
+  align-items: center;
+  top: 10px;
+  left: 10px;
+}
+
+#nova {
+  position: absolute;
+  left: -26px;
+  top: -17px;
 }
