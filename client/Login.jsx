@@ -66,7 +66,7 @@ class Login extends React.Component {
     createNewPlayer(name);
   }
 
-  selectName() {
+  selectName(e) {
     this.setState({
       name: e.target.value,
     });
