@@ -2,10 +2,11 @@
 /* eslint-disable max-len */
 /* eslint-disable import/extensions */
 import React from 'react';
-import { Howl, Howler } from 'howler';
+import { Howl } from 'howler';
 import Level from './Level.jsx';
 import distanceBetween from './helpers';
 import SpellBook from './SpellBook.jsx';
+import Login from './Login.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -16,7 +17,9 @@ class App extends React.Component {
       playerSpells: [],
       spells: [],
       monsters: [],
-      playerStats: { level: null, exp: null, health: null },
+      playerStats: {
+        level: null, exp: null, health: null, name: null,
+      },
       dead: false,
       level: 1,
       spellCast: false,
@@ -25,6 +28,7 @@ class App extends React.Component {
     this.checkOverlap = this.checkOverlap.bind(this);
     this.checkSpellHit = this.checkSpellHit.bind(this);
     this.endSpellCast = this.endSpellCast.bind(this);
+    this.createNewPlayer = this.createNewPlayer.bind(this);
   }
 
   componentDidMount() {
@@ -42,17 +46,17 @@ class App extends React.Component {
       spells: updatedSpells,
     });
 
-    const playerTop = Math.floor(Math.random() * (91 - 0) + 0);
-    const playerLeft = Math.floor(Math.random() * (91 - 0) + 0);
-    const player = { top: playerTop, left: playerLeft };
-    const startingPlayerStats = { level: 1, exp: 0 };
-    const playerHealth = startingPlayerStats.level * 10;
-    startingPlayerStats.health = playerHealth;
-    this.setState({
-      playerStats: startingPlayerStats,
-      playerLocation: player,
-      playerCenter: { top: player.top + 4, left: player.left + 4 },
-    });
+    // const playerTop = Math.floor(Math.random() * (91 - 0) + 0);
+    // const playerLeft = Math.floor(Math.random() * (91 - 0) + 0);
+    // const player = { top: playerTop, left: playerLeft };
+    // const startingPlayerStats = { level: 1, exp: 0 };
+    // const playerHealth = startingPlayerStats.level * 10;
+    // startingPlayerStats.health = playerHealth;
+    // this.setState({
+    //   playerStats: startingPlayerStats,
+    //   playerLocation: player,
+    //   playerCenter: { top: player.top + 4, left: player.left + 4 },
+    // });
 
     const { level } = this.state;
     for (let i = 0; i < level + 4; i += 1) {
@@ -87,9 +91,23 @@ class App extends React.Component {
     this.checkOverlap();
   }
 
+  createNewPlayer(playerName) {
+    const playerTop = Math.floor(Math.random() * (91 - 0) + 0);
+    const playerLeft = Math.floor(Math.random() * (91 - 0) + 0);
+    const player = { top: playerTop, left: playerLeft };
+    const startingPlayerStats = { level: 1, exp: 0, name: playerName };
+    const playerHealth = startingPlayerStats.level * 10;
+    startingPlayerStats.health = playerHealth;
+    this.setState({
+      playerStats: startingPlayerStats,
+      playerLocation: player,
+      playerCenter: { top: player.top + 4, left: player.left + 4 },
+    });
+  }
+
   checkSpellHit(spellName) {
     const sound = new Howl({
-      src: 'nova2.mp3',
+      src: 'nova3.mp3',
     });
 
     sound.play();
@@ -168,7 +186,7 @@ class App extends React.Component {
     const {
       spells, playerLocation, playerSpells, dead, monsters, playerStats, spellCast,
     } = this.state;
-    if (!dead) {
+    if (!dead && playerStats.name) {
       return (
         <div>
           <h1> DunDunDungeon Crawler</h1>
@@ -192,8 +210,10 @@ class App extends React.Component {
           </div>
         </div>
       );
+    } if (dead) {
+      return <div className="dead">YOU HAVE DIED</div>;
     }
-    return <div className="dead">YOU HAVE DIED</div>;
+    return <Login createNewPlayer={this.createNewPlayer} />;
   }
 }
 

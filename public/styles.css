@@ -73,7 +73,7 @@ h3 {
 
 #spellDescription {
   left: 84%;
-  top: -115%;
+  top: -110%;
 }
 
 .description {
@@ -119,4 +119,61 @@ h3 {
   position: relative;
   top: 707px;
   left: 475px;
+}
+
+.login {
+  color: red;
+  left: 22%;
+}
+
+.newPlayer {
+  position: absolute;
+  top: 40%;
+  left: 30%;
+  background-color: transparent;
+  color: red;
+  font-family: 'Nosifer', cursive;
+  font-size: 20px;
+}
+
+.returningPlayer {
+  position: absolute;
+  top: 40%;
+  left: 55%;
+  background-color: transparent;
+  color: red;
+  font-family: 'Nosifer', cursive;
+  font-size: 20px;
+}
+
+.createPlayer{
+  position: absolute;
+  top: 60%;
+  left: 40%;
+  background-color: transparent;
+  color: red;
+  font-family: 'Nosifer', cursive;
+  font-size: 20px;
+}
+
+#name {
+  position: absolute;
+  top: 70%;
+  left: 37.5%;
+  background-color:black;
+  color: red;
+  font-family: 'Nosifer', cursive;
+  font-size: 20px;
+  text-align: center;
+
+}
+
+.startGame {
+  position: absolute;
+  top: 80%;
+  left: 44%;
+  background-color: transparent;
+  color: red;
+  font-family: 'Nosifer', cursive;
+  font-size: 20px;
 }
