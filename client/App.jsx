@@ -193,7 +193,9 @@ class App extends React.Component {
       const monster = monsters[i];
       if (distanceBetween(playerCenter, monster.center) < 5) {
         const updatePlayerHealth = playerStats.health - 0.5;
-        const updatedPlayerStats = { level: playerStats.level, exp: playerStats.exp, health: updatePlayerHealth };
+        const updatedPlayerStats = {
+          level: playerStats.level, exp: playerStats.exp, health: updatePlayerHealth, name: playerStats.name,
+        };
         this.setState({
           playerStats: updatedPlayerStats,
         }, () => {
@@ -241,7 +243,7 @@ class App extends React.Component {
     } if (dead) {
       return <div className="dead">YOU HAVE DIED</div>;
     }
-    return <Login createNewPlayer={this.createNewPlayer} />;
+    return <Login createNewPlayer={this.createNewPlayer} loadGame={this.loadGame} />;
   }
 }
 

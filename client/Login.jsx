@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/prop-types */
 /* eslint-disable import/extensions */
@@ -38,8 +39,10 @@ class Login extends React.Component {
     }
   }
 
-  getSavedGame() {
+  getSavedGame(e) {
+    e.preventDefault();
     const { name, savedGames } = this.state;
+    const { loadGame } = this.props;
     let hasGameData = false;
     let gameData;
     for (let i = 0; i < savedGames.length; i += 1) {
@@ -50,7 +53,7 @@ class Login extends React.Component {
     }
     if (hasGameData) {
       console.log('HELLO');
-      this.loadGame(gameData);
+      loadGame(gameData);
     }
   }
 
@@ -60,7 +63,8 @@ class Login extends React.Component {
     });
   }
 
-  startNewGame() {
+  startNewGame(e) {
+    e.preventDefault();
     const { createNewPlayer } = this.props;
     const { name } = this.state;
     createNewPlayer(name);
@@ -86,15 +90,15 @@ class Login extends React.Component {
         <h1 className="login"> WELCOME TO DunDunDungeon Crawler!</h1>
         <button type="button" className="newPlayer" onClick={this.selectNewPlayer}>NEW PLAYER?</button>
         {newPlayer ? (
-          <form>
+          <form onSubmit={this.startNewGame}>
             <label htmlFor="name" className="createPlayer">Enter Player Name</label>
             <input type="text" name="name" id="name" value={name} onChange={this.selectName} required />
-            <input type="submit" value="Start Game" className="startGame" onClick={this.startNewGame} />
+            <input type="submit" value="Start Game" id="startGame" onClick={this.startNewGame} />
           </form>
         ) : null}
         <button type="button" className="returningPlayer" onClick={this.selectReturningPlayer}>RETURNING PLAYER?</button>
         {returningPlayer ? (
-          <form>
+          <form onSubmit={this.getSavedGame}>
             <label htmlFor="name" className="createPlayer">Enter Player Name</label>
             <input type="text" name="name" id="name" value={name} onChange={this.selectName} required />
             <button type="button" value="Start Game" id="startGame" onClick={this.getSavedGame}>START GAME</button>

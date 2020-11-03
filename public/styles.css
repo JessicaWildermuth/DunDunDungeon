@@ -168,12 +168,29 @@ h3 {
 
 }
 
-.startGame {
+#startGame {
   position: absolute;
+  height: 100px;
+  width: 200px;
   top: 80%;
   left: 44%;
   background-color: transparent;
   color: red;
   font-family: 'Nosifer', cursive;
   font-size: 20px;
+}
+
+.dead {
+  color: red;
+}
+
+#save {
+  color: red;
+}
+
+.save {
+  left: 1250px;
+  position: absolute;
+  font-family: 'Nosifer', cursive;
+  color: red;
 }
