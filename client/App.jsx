@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable no-console */
 /* eslint-disable array-callback-return */
 /* eslint-disable max-len */
@@ -9,6 +10,7 @@ import Level from './Level.jsx';
 import distanceBetween from './helpers';
 import SpellBook from './SpellBook.jsx';
 import Login from './Login.jsx';
+import JukeBox from './JukeBox.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -25,6 +27,7 @@ class App extends React.Component {
       dead: false,
       level: 1,
       spellCast: false,
+      musicList: [{ title: 'LostWoods', src: 'LostWoods.mp3' }, { title: 'Memoraphile', src: 'memoraphile.mp3' }, { title: 'FrogTheme', src: 'FrogTheme.mp3' }, { title: 'MetalMix', src: 'MetalMix.mp3' }],
     };
     this.getLocation = this.getLocation.bind(this);
     this.checkOverlap = this.checkOverlap.bind(this);
@@ -142,7 +145,6 @@ class App extends React.Component {
     const sound = new Howl({
       src: 'nova3.mp3',
     });
-
     sound.play();
     this.setState({
       spellCast: true,
@@ -196,7 +198,7 @@ class App extends React.Component {
         }
         if (!spellAlreadyLearnt) {
           const updatePlayerSpells = playerSpells;
-          const newSpell = {type: spell.type, dmg: spell.dmg};
+          const newSpell = { type: spell.type, dmg: spell.dmg };
           updatePlayerSpells.push(newSpell);
           const updatedSpells = spells;
           updatedSpells.splice(spells.indexOf(spell), 1);
@@ -205,7 +207,7 @@ class App extends React.Component {
             spells: updatedSpells,
           });
         } else {
-          alert('Spell Already Learnt')
+          alert('Spell Already Learnt');
           const updatedSpells = spells;
           updatedSpells.splice(spells.indexOf(spell), 1);
           this.setState({
@@ -237,7 +239,7 @@ class App extends React.Component {
 
   render() {
     const {
-      spells, playerLocation, playerSpells, dead, monsters, playerStats, spellCast,
+      spells, playerLocation, playerSpells, dead, monsters, playerStats, spellCast, musicList,
     } = this.state;
     if (!dead && playerStats.name) {
       return (
@@ -264,6 +266,7 @@ class App extends React.Component {
           <div id="save">
             <button type="button" className="save" onClick={this.saveGame}>SAVE GAME</button>
           </div>
+          <JukeBox musicList={musicList} />
         </div>
       );
     } if (dead) {
