@@ -71,7 +71,8 @@ class Login extends React.Component {
     const { name, savedGames } = this.state;
     let nameAlreadyExists = false;
     for (let i = 0; i < savedGames.length; i += 1) {
-      if (savedGames[i].name === name) {
+      const playerStats = JSON.parse(savedGames[i].playerStats);
+      if (playerStats.name === name) {
         nameAlreadyExists = true;
         break;
       }
