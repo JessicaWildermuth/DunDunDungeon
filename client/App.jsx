@@ -233,6 +233,9 @@ class App extends React.Component {
             {' '}
             {playerStats.health}
           </div>
+          <div id="save">
+            <button type="button" className="save" onClick={this.saveGame}>SAVE GAME</button>
+          </div>
         </div>
       );
     } if (dead) {
