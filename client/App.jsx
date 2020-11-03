@@ -29,6 +29,8 @@ class App extends React.Component {
     this.checkSpellHit = this.checkSpellHit.bind(this);
     this.endSpellCast = this.endSpellCast.bind(this);
     this.createNewPlayer = this.createNewPlayer.bind(this);
+    this.loadGame = this.loadGame.bind(this);
+    this.saveGame = this.saveGame.bind(this);
   }
 
   componentDidMount() {
@@ -45,18 +47,6 @@ class App extends React.Component {
     this.setState({
       spells: updatedSpells,
     });
-
-    // const playerTop = Math.floor(Math.random() * (91 - 0) + 0);
-    // const playerLeft = Math.floor(Math.random() * (91 - 0) + 0);
-    // const player = { top: playerTop, left: playerLeft };
-    // const startingPlayerStats = { level: 1, exp: 0 };
-    // const playerHealth = startingPlayerStats.level * 10;
-    // startingPlayerStats.health = playerHealth;
-    // this.setState({
-    //   playerStats: startingPlayerStats,
-    //   playerLocation: player,
-    //   playerCenter: { top: player.top + 4, left: player.left + 4 },
-    // });
 
     const { level } = this.state;
     for (let i = 0; i < level + 4; i += 1) {
@@ -89,6 +79,41 @@ class App extends React.Component {
       });
     }
     this.checkOverlap();
+  }
+
+  loadGame(gameData) {
+    console.log('hit!');
+    console.log(gameData);
+    const playerTop = Math.floor(Math.random() * (91 - 0) + 0);
+    const playerLeft = Math.floor(Math.random() * (91 - 0) + 0);
+    const player = { top: playerTop, left: playerLeft };
+    const playerStats = JSON.parse(gameData.playerStats);
+    this.setState({
+      playerLocation: player,
+      playerCenter: { top: player.top + 4, left: player.left + 4 },
+      playerStats,
+      playerSpells: gameData.spells,
+    });
+  }
+
+  saveGame() {
+    const { playerStats, playerSpells } = this.state;
+    console.log(playerSpells, 'I AM THE SPELLBOOK');
+    axios({
+      method: 'post',
+      url: '/gameData',
+      params: {
+        playerName: playerStats.name,
+        playerStats,
+        playerSpells,
+      },
+    })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   createNewPlayer(playerName) {
