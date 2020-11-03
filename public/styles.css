@@ -1,10 +1,14 @@
 html {
   max-width: 100%;
   overflow-x: hidden;
+  max-height: 100%;
+  overflow-y: hidden;
 }
 
 body {
   background-color: black;
+  max-height: 100%;
+  max-width: 100%;
 }
 
 h1 {
@@ -45,8 +49,8 @@ h1 {
   position: absolute;
   height: 200px;
   width: 200px;
-  top: 10%;
-  left: 5%;
+  top: 20%;
+  left: 6%;
 }
 
 button {
@@ -72,15 +76,24 @@ h3 {
 }
 
 #spellDescription {
-  left: 84%;
+  left: 86%;
   top: -110%;
 }
 
 .description {
   position: absolute;
   top: 18%;
-  left: 87%;
-  font-size: 10px;
+  left: 83%;
+  font-size: 12px;
+  width: 100px;
+  font-family: 'Dancing Script', cursive;
+}
+
+.nova {
+  position: absolute;
+  top: 18%;
+  left: 34%;
+  font-size: 18px;
   width: 100px;
   font-family: 'Dancing Script', cursive;
 }
@@ -105,20 +118,23 @@ h3 {
 
 .playerHealth {
   position: relative;
-  top: 670px;
-  left: 1000px;
+  top: 355px;
+  left: 315px;
+  white-space: pre-wrap;
 }
 
 .playerExp {
   position: relative;
-  top: 690px;
-  left: 750px;
+  top: 392px;
+  left: 200px;
+  white-space: pre-wrap;
 }
 
 .playerLevel {
   position: relative;
-  top: 707px;
-  left: 475px;
+  top: 429px;
+  left: 115px;
+  white-space: pre-wrap;
 }
 
 .login {
@@ -234,3 +250,10 @@ h3 {
   top: 90%;
   position: absolute;
 }
+
+#statsContainer {
+  position: absolute;
+  top: 50%;
+  left: 50px;
+}
+

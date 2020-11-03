@@ -50,10 +50,10 @@ class SpellBook extends React.Component {
             count += 1;
             return (
               <div>
-                <button type="button" id="one" className={spell.type} ref={this.spellRef}>
+                <div className={spell.type} ref={this.spellRef}>
                   {spell.type}
                   {' '}
-                </button>
+                </div>
                 <div className="description">
                   Deal One Damage to Nearby Enemies
                 </div>

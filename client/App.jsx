@@ -220,7 +220,7 @@ class App extends React.Component {
     for (let i = 0; i < monsters.length; i += 1) {
       const monster = monsters[i];
       if (distanceBetween(playerCenter, monster.center) < 5) {
-        const updatePlayerHealth = playerStats.health - 0.5;
+        const updatePlayerHealth = playerStats.health - 0;  //CHANGE BACK TO -0.5
         const updatedPlayerStats = {
           level: playerStats.level, exp: playerStats.exp, health: updatePlayerHealth, name: playerStats.name,
         };
@@ -247,21 +247,26 @@ class App extends React.Component {
           <h1> DunDunDungeon Crawler</h1>
           <Level getLocation={this.getLocation} spells={spells} playerLocation={playerLocation} monsters={monsters} spellCast={spellCast} />
           <SpellBook playerSpells={playerSpells} checkSpellHit={this.checkSpellHit} />
-          <div id="playerStats" className="playerLevel">
-            Player Level
-            {' '}
-            {playerStats.level}
-          </div>
-          <div id="playerStats" className="playerExp">
-            {' '}
-            Experience
-            {' '}
-            {playerStats.exp}
-          </div>
-          <div id="playerStats" className="playerHealth">
-            Health
-            {' '}
-            {playerStats.health}
+          <div id="playerStatContainer">
+          <img id="statsContainer" src="buttonNormalSmaller.png" alt="playerStatsContainer" />
+            <div id="playerStats" className="playerLevel">
+              Level
+              {'\n'}
+              {'   '}
+              {playerStats.level}
+            </div>
+            <div id="playerStats" className="playerExp">
+              Experience
+              {'\n'}
+              {'         '}
+              {playerStats.exp}
+            </div>
+            <div id="playerStats" className="playerHealth">
+              Health
+              {'\n'}
+              {'    '}
+              {playerStats.health}
+            </div>
           </div>
           <div id="save">
             <button type="button" className="save" onClick={this.saveGame}>SAVE GAME</button>
