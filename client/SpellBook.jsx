@@ -47,6 +47,7 @@ class SpellBook extends React.Component {
         <h3 id="spellDescription">Description</h3>
         { playerSpells.length !== 0
           ? playerSpells.map((spell) => {
+            // spell = JSON.parse(spell);
             count += 1;
             return (
               <div>

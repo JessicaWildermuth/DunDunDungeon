@@ -84,30 +84,36 @@ class App extends React.Component {
   }
 
   loadGame(gameData) {
-    console.log('hit!');
-    console.log(gameData);
     const playerTop = Math.floor(Math.random() * (91 - 0) + 0);
     const playerLeft = Math.floor(Math.random() * (91 - 0) + 0);
     const player = { top: playerTop, left: playerLeft };
     const playerStats = JSON.parse(gameData.playerStats);
+    const playerSpells = [];
+    for (let i = 0; i < gameData.spells.length; i += 1) {
+      playerSpells.push(JSON.parse(gameData.spells[i]));
+    }
     this.setState({
       playerLocation: player,
       playerCenter: { top: player.top + 4, left: player.left + 4 },
       playerStats,
-      playerSpells: gameData.spells,
+      playerSpells,
     });
   }
 
   saveGame() {
     const { playerStats, playerSpells } = this.state;
-    console.log(playerSpells, 'I AM THE SPELLBOOK');
+    const spells = [];
+    for (let i = 0; i < playerSpells.length; i += 1) {
+      const spell = { type: playerSpells[i].type, dmg: playerSpells[i].dmg };
+      spells.push(spell);
+    }
     axios({
       method: 'post',
       url: '/gameData',
       params: {
         playerName: playerStats.name,
         playerStats,
-        playerSpells,
+        spells,
       },
     })
       .then((response) => {
@@ -178,16 +184,34 @@ class App extends React.Component {
       playerCenter, spells, playerStats, monsters,
     } = this.state;
     spells.map((spell) => {
-      if (distanceBetween(playerCenter, spell.center) < 5) {
+      if (distanceBetween(playerCenter, spell.center) < 4) {
         const { playerSpells } = this.state;
-        const updatePlayerSpells = playerSpells;
-        updatePlayerSpells.push(spell);
-        const updatedSpells = spells;
-        updatedSpells.splice(spells.indexOf(spell), 1);
-        this.setState({
-          playerSpells: updatePlayerSpells,
-          spells: updatedSpells,
-        });
+        let spellAlreadyLearnt = false;
+        for (let i = 0; i < playerSpells.length; i += 1) {
+          const knownSpell = playerSpells[i];
+          if (knownSpell.type === spell.type) {
+            spellAlreadyLearnt = true;
+            break;
+          }
+        }
+        if (!spellAlreadyLearnt) {
+          const updatePlayerSpells = playerSpells;
+          const newSpell = {type: spell.type, dmg: spell.dmg};
+          updatePlayerSpells.push(newSpell);
+          const updatedSpells = spells;
+          updatedSpells.splice(spells.indexOf(spell), 1);
+          this.setState({
+            playerSpells: updatePlayerSpells,
+            spells: updatedSpells,
+          });
+        } else {
+          alert('Spell Already Learnt')
+          const updatedSpells = spells;
+          updatedSpells.splice(spells.indexOf(spell), 1);
+          this.setState({
+            spells: updatedSpells,
+          });
+        }
       }
     });
 

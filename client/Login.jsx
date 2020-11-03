@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable no-console */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/prop-types */
@@ -52,8 +53,9 @@ class Login extends React.Component {
       }
     }
     if (hasGameData) {
-      console.log('HELLO');
       loadGame(gameData);
+    } else {
+      alert('NO SAVE DATA FOUND FOR THAT PLAYER NAME');
     }
   }
 
@@ -66,8 +68,19 @@ class Login extends React.Component {
   startNewGame(e) {
     e.preventDefault();
     const { createNewPlayer } = this.props;
-    const { name } = this.state;
-    createNewPlayer(name);
+    const { name, savedGames } = this.state;
+    let nameAlreadyExists = false;
+    for (let i = 0; i < savedGames.length; i += 1) {
+      if (savedGames[i].name === name) {
+        nameAlreadyExists = true;
+        break;
+      }
+    }
+    if (!nameAlreadyExists) {
+      createNewPlayer(name);
+    } else {
+      alert('Player Name Already Exists! Please Enter A Different Name');
+    }
   }
 
   selectName(e) {
