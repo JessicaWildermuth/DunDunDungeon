@@ -24,7 +24,8 @@ class Winner extends React.Component {
 
   render() {
     return (
-      <div id="win">
+      <div>
+        <img src="winning.gif" id="win" alt="winning" />
         <h2 className="winner">YOU HAVE COMPLETED THE GAME DEMO!</h2>
       </div>
     );
