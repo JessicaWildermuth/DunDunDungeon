@@ -42,6 +42,7 @@ class App extends React.Component {
     this.loadGame = this.loadGame.bind(this);
     this.saveGame = this.saveGame.bind(this);
     this.resetBlood = this.resetBlood.bind(this);
+    this.playSong = this.playSong.bind(this);
   }
 
   componentDidMount() {
@@ -176,7 +177,6 @@ class App extends React.Component {
           const updatedMonsterList = monsters;
           updatedMonsterList.splice(i, 1);
           if (updatedMonsterList.length === 0) {
-            Howler.stop();
             this.setState({
               win: true,
             });
@@ -259,7 +259,6 @@ class App extends React.Component {
         }, () => {
           console.log(playerStats.health);
           if (playerStats.health === 0) {
-            // Howler.stop();
             this.setState({
               dead: true,
             });
@@ -270,9 +269,24 @@ class App extends React.Component {
     }
   }
 
+  playSong(e) {
+    const { currentSong } = this.state;
+    if (currentSong) {
+      Howler.stop();
+    }
+    const song = `${e.target.className}.mp3`;
+    const sound = new Howl({
+      src: song,
+    });
+    this.setState({
+      currentSong: song,
+    });
+    sound.play();
+  }
+
   render() {
     const {
-      spells, playerLocation, playerSpells, dead, monsters, playerStats, spellCast, musicList, hurt, win,
+      spells, playerLocation, playerSpells, dead, monsters, playerStats, spellCast, musicList, hurt, win, currentSong,
     } = this.state;
     if (!dead && playerStats.name && !win) {
       return (
@@ -304,16 +318,16 @@ class App extends React.Component {
           <div id="save">
             <button type="button" className="save" onClick={this.saveGame}>SAVE GAME</button>
           </div>
-          <JukeBox musicList={musicList} />
+          <JukeBox musicList={musicList} playSong={this.playSong} />
         </div>
       );
     } if (dead) {
       return (
-        <Death />
+        <Death currentSong={currentSong} />
       );
     } if (win) {
       return (
-        <Winner />
+        <Winner currentSong={currentSong} />
       );
     }
     return <Login createNewPlayer={this.createNewPlayer} loadGame={this.loadGame} />;

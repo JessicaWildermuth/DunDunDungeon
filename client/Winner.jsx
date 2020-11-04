@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { Howl } from 'howler';
+import { Howl, Howler } from 'howler';
 
 class Winner extends React.Component {
   constructor(props) {
@@ -12,6 +12,10 @@ class Winner extends React.Component {
   }
 
   componentDidMount() {
+    const { currentSong } = this.props;
+    if (currentSong) {
+      Howler.stop();
+    }
     const sound = new Howl({
       src: 'fanfare.mp3',
     });
