@@ -11,6 +11,8 @@ import distanceBetween from './helpers';
 import SpellBook from './SpellBook.jsx';
 import Login from './Login.jsx';
 import JukeBox from './JukeBox.jsx';
+import Winner from './Winner.jsx';
+import Death from './Death.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -29,6 +31,8 @@ class App extends React.Component {
       spellCast: false,
       musicList: [{ title: 'LostWoods', src: 'LostWoods.mp3' }, { title: 'Memoraphile', src: 'memoraphile.mp3' }, { title: 'FrogTheme', src: 'FrogTheme.mp3' }, { title: 'MetalMix', src: 'MetalMix.mp3' }],
       hurt: false,
+      win: false,
+      // currentSong: null,
     };
     this.getLocation = this.getLocation.bind(this);
     this.checkOverlap = this.checkOverlap.bind(this);
@@ -171,6 +175,12 @@ class App extends React.Component {
           updatedPlayerStats.exp += 10;
           const updatedMonsterList = monsters;
           updatedMonsterList.splice(i, 1);
+          if (updatedMonsterList.length === 0) {
+            Howler.stop();
+            this.setState({
+              win: true,
+            });
+          }
           this.setState({
             monsters: updatedMonsterList,
             playerStats: updatedPlayerStats,
@@ -249,6 +259,7 @@ class App extends React.Component {
         }, () => {
           console.log(playerStats.health);
           if (playerStats.health === 0) {
+            // Howler.stop();
             this.setState({
               dead: true,
             });
@@ -261,9 +272,9 @@ class App extends React.Component {
 
   render() {
     const {
-      spells, playerLocation, playerSpells, dead, monsters, playerStats, spellCast, musicList, hurt,
+      spells, playerLocation, playerSpells, dead, monsters, playerStats, spellCast, musicList, hurt, win,
     } = this.state;
-    if (!dead && playerStats.name) {
+    if (!dead && playerStats.name && !win) {
       return (
         <div>
           <h1> DunDunDungeon Crawler</h1>
@@ -297,12 +308,12 @@ class App extends React.Component {
         </div>
       );
     } if (dead) {
-      Howler.stop();
       return (
-        <div className="dead">
-          <img id="death" src="ash.gif" alt="death" />
-          <h2 id="dead">YOU HAVE DIED</h2>
-        </div>
+        <Death />
+      );
+    } if (win) {
+      return (
+        <Winner />
       );
     }
     return <Login createNewPlayer={this.createNewPlayer} loadGame={this.loadGame} />;

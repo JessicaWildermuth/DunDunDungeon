@@ -22,7 +22,7 @@ class JukeBox extends React.Component {
       src: song,
     });
     this.setState({
-      currentSong: `${sound}`,
+      currentSong: song,
     });
     sound.play();
   }

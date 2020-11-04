@@ -282,3 +282,13 @@ h2 {
   height: 815px;
   z-index: 10;
 }
+
+.winner {
+  z-index: 1;
+  top: 41%;
+  left: 27%;
+  position: relative;
+  color: red;
+  font-family: 'Nosifer', cursive;
+  width: 700px;
+}
