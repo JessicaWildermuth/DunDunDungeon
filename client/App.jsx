@@ -144,7 +144,6 @@ class App extends React.Component {
   }
 
   checkSpellHit(spellName) {
-    console.log(spellName);
     const sound = new Howl({
       src: 'nova3.mp3',
     });
@@ -231,7 +230,11 @@ class App extends React.Component {
     for (let i = 0; i < monsters.length; i += 1) {
       const monster = monsters[i];
       if (distanceBetween(playerCenter, monster.center) < 5) {
-        const updatePlayerHealth = playerStats.health - 0.5; // CHANGE BACK TO -0.5
+        const sound = new Howl({
+          src: 'dmg.mp3',
+        });
+        sound.play();
+        const updatePlayerHealth = playerStats.health - 0.25; // CHANGE BACK TO -0.5
         const updatedPlayerStats = {
           level: playerStats.level, exp: playerStats.exp, health: updatePlayerHealth, name: playerStats.name,
         };
