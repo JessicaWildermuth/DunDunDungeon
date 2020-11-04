@@ -28,6 +28,7 @@ class App extends React.Component {
       level: 1,
       spellCast: false,
       musicList: [{ title: 'LostWoods', src: 'LostWoods.mp3' }, { title: 'Memoraphile', src: 'memoraphile.mp3' }, { title: 'FrogTheme', src: 'FrogTheme.mp3' }, { title: 'MetalMix', src: 'MetalMix.mp3' }],
+      hurt: false,
     };
     this.getLocation = this.getLocation.bind(this);
     this.checkOverlap = this.checkOverlap.bind(this);
@@ -36,6 +37,7 @@ class App extends React.Component {
     this.createNewPlayer = this.createNewPlayer.bind(this);
     this.loadGame = this.loadGame.bind(this);
     this.saveGame = this.saveGame.bind(this);
+    this.resetBlood = this.resetBlood.bind(this);
   }
 
   componentDidMount() {
@@ -142,6 +144,7 @@ class App extends React.Component {
   }
 
   checkSpellHit(spellName) {
+    console.log(spellName);
     const sound = new Howl({
       src: 'nova3.mp3',
     });
@@ -177,6 +180,14 @@ class App extends React.Component {
     setTimeout(() => {
       this.setState({
         spellCast: false,
+      });
+    }, 500);
+  }
+
+  resetBlood() {
+    setTimeout(() => {
+      this.setState({
+        hurt: false,
       });
     }, 500);
   }
@@ -220,18 +231,20 @@ class App extends React.Component {
     for (let i = 0; i < monsters.length; i += 1) {
       const monster = monsters[i];
       if (distanceBetween(playerCenter, monster.center) < 5) {
-        const updatePlayerHealth = playerStats.health - 0;  //CHANGE BACK TO -0.5
+        const updatePlayerHealth = playerStats.health - 0.5; // CHANGE BACK TO -0.5
         const updatedPlayerStats = {
           level: playerStats.level, exp: playerStats.exp, health: updatePlayerHealth, name: playerStats.name,
         };
         this.setState({
           playerStats: updatedPlayerStats,
+          hurt: true,
         }, () => {
           if (playerStats.health === 0) {
             this.setState({
               dead: true,
             });
           }
+          this.resetBlood();
         });
       }
     }
@@ -239,16 +252,16 @@ class App extends React.Component {
 
   render() {
     const {
-      spells, playerLocation, playerSpells, dead, monsters, playerStats, spellCast, musicList,
+      spells, playerLocation, playerSpells, dead, monsters, playerStats, spellCast, musicList, hurt,
     } = this.state;
     if (!dead && playerStats.name) {
       return (
         <div>
           <h1> DunDunDungeon Crawler</h1>
-          <Level getLocation={this.getLocation} spells={spells} playerLocation={playerLocation} monsters={monsters} spellCast={spellCast} />
+          <Level getLocation={this.getLocation} spells={spells} playerLocation={playerLocation} monsters={monsters} spellCast={spellCast} hurt={hurt} />
           <SpellBook playerSpells={playerSpells} checkSpellHit={this.checkSpellHit} />
           <div id="playerStatContainer">
-          <img id="statsContainer" src="buttonNormalSmaller.png" alt="playerStatsContainer" />
+            <img id="statsContainer" src="buttonNormalSmaller.png" alt="playerStatsContainer" />
             <div id="playerStats" className="playerLevel">
               Level
               {'\n'}

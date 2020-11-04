@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable react/prop-types */
 /* eslint-disable import/extensions */
 import React from 'react';
@@ -16,16 +17,15 @@ class Level extends React.Component {
   render() {
     // eslint-disable-next-line react/prop-types
     const {
-      getLocation, spells, playerLocation, monsters, spellCast,
+      getLocation, spells, playerLocation, monsters, spellCast, hurt,
     } = this.props;
     return (
 
       <div className="level">
         <img src="map.png" alt="dungeonFloor" />
-        <Player getLocation={getLocation} playerLocation={playerLocation} spellCast={spellCast} />
+        <Player getLocation={getLocation} playerLocation={playerLocation} spellCast={spellCast} hurt={hurt} />
         <Monster getLocation={getLocation} monsters={monsters} />
         {spells.length !== 0 ? <Spell getLocation={getLocation} spells={spells} /> : null}
-
       </div>
     );
   }

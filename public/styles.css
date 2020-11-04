@@ -15,7 +15,7 @@ h1 {
   position: absolute;
   font-family: 'Nosifer', cursive;
   color: red;
-  left: 29.5%;
+  left: 29.3%;
 }
 
 .level {
@@ -50,7 +50,7 @@ h1 {
   height: 200px;
   width: 200px;
   top: 20%;
-  left: 6%;
+  left: 5%;
 }
 
 button {
@@ -118,34 +118,34 @@ h3 {
 
 .playerHealth {
   position: relative;
-  top: 355px;
-  left: 315px;
+  top: 370px;
+  left: 298px;
   white-space: pre-wrap;
 }
 
 .playerExp {
   position: relative;
-  top: 392px;
-  left: 200px;
+  top: 406px;
+  left: 175px;
   white-space: pre-wrap;
 }
 
 .playerLevel {
   position: relative;
-  top: 429px;
-  left: 115px;
+  top: 444px;
+  left: 87px;
   white-space: pre-wrap;
 }
 
 .login {
   color: red;
-  left: 22%;
+  left: 19%;
 }
 
 .newPlayer {
   position: absolute;
   top: 40%;
-  left: 30%;
+  left: 28%;
   background-color: transparent;
   color: red;
   font-family: 'Nosifer', cursive;
@@ -155,7 +155,7 @@ h3 {
 .returningPlayer {
   position: absolute;
   top: 40%;
-  left: 55%;
+  left: 57%;
   background-color: transparent;
   color: red;
   font-family: 'Nosifer', cursive;
@@ -254,6 +254,11 @@ h3 {
 #statsContainer {
   position: absolute;
   top: 50%;
-  left: 50px;
+  left: 22px;
 }
 
+#blood {
+  position: absolute;
+  left: 10px;
+  top: 19px;
+}
