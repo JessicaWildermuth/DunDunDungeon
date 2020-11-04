@@ -101,6 +101,7 @@ class Login extends React.Component {
     const { newPlayer, name, returningPlayer } = this.state;
     return (
       <div id="login">
+        <img id="dragon" src={"dragonAttack.gif"} alt="dragon" />
         <h1 className="login"> WELCOME TO DunDunDungeon Crawler!</h1>
         <button type="button" className="newPlayer" onClick={this.selectNewPlayer}>NEW PLAYER?</button>
         {newPlayer ? (
