@@ -5,6 +5,7 @@
 /* eslint-disable import/extensions */
 import React from 'react';
 import axios from 'axios';
+import { Howl, Howler } from 'howler';
 
 class Login extends React.Component {
   constructor(props) {
@@ -23,6 +24,10 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
+    const sound = new Howl({
+      src: 'WingedAngel.mp3',
+    });
+    sound.play();
     const { savedGames } = this.state;
     if (!savedGames) {
       axios({
@@ -53,6 +58,7 @@ class Login extends React.Component {
       }
     }
     if (hasGameData) {
+      Howler.stop();
       loadGame(gameData);
     } else {
       alert('NO SAVE DATA FOUND FOR THAT PLAYER NAME');
@@ -62,6 +68,7 @@ class Login extends React.Component {
   selectNewPlayer() {
     this.setState({
       newPlayer: true,
+      returningPlayer: false,
     });
   }
 
@@ -78,6 +85,7 @@ class Login extends React.Component {
       }
     }
     if (!nameAlreadyExists) {
+      Howler.stop();
       createNewPlayer(name);
     } else {
       alert('Player Name Already Exists! Please Enter A Different Name');
@@ -93,6 +101,7 @@ class Login extends React.Component {
   selectReturningPlayer() {
     this.setState({
       returningPlayer: true,
+      newPlayer: false,
     });
   }
 
@@ -101,7 +110,7 @@ class Login extends React.Component {
     const { newPlayer, name, returningPlayer } = this.state;
     return (
       <div id="login">
-        <img id="dragon" src={"dragonAttack.gif"} alt="dragon" />
+        <img id="dragon" src="dragonAttack.gif" alt="dragon" />
         <h1 className="login"> WELCOME TO DunDunDungeon Crawler!</h1>
         <button type="button" className="newPlayer" onClick={this.selectNewPlayer}>NEW PLAYER?</button>
         {newPlayer ? (
