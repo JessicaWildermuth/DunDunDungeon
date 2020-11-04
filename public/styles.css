@@ -267,3 +267,18 @@ h3 {
   position: absolute;
   left: 24%;
 }
+
+h2 {
+  z-index: 1;
+  top: 41%;
+  left: 42%;
+  position: absolute;
+  color: red;
+  font-family: 'Nosifer', cursive;
+}
+
+#death {
+  width: 100%;
+  height: 815px;
+  z-index: 10;
+}

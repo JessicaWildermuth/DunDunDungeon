@@ -5,7 +5,7 @@
 /* eslint-disable import/extensions */
 import React from 'react';
 import axios from 'axios';
-import { Howl } from 'howler';
+import { Howl, Howler } from 'howler';
 import Level from './Level.jsx';
 import distanceBetween from './helpers';
 import SpellBook from './SpellBook.jsx';
@@ -151,7 +151,9 @@ class App extends React.Component {
     this.setState({
       spellCast: true,
     }, this.endSpellCast);
-    const { playerCenter, monsters, playerSpells } = this.state;
+    const {
+      playerCenter, monsters, playerSpells, playerStats,
+    } = this.state;
     let spellDmg;
     for (let i = 0; i < playerSpells.length; i += 1) {
       const spell = playerSpells[i];
@@ -165,10 +167,13 @@ class App extends React.Component {
       if (distanceBetween(playerCenter, monster.center) < 11) {
         monster.health -= spellDmg;
         if (monster.health === 0) {
+          const updatedPlayerStats = playerStats;
+          updatedPlayerStats.exp += 10;
           const updatedMonsterList = monsters;
           updatedMonsterList.splice(i, 1);
           this.setState({
             monsters: updatedMonsterList,
+            playerStats: updatedPlayerStats,
           });
         }
       }
@@ -242,6 +247,7 @@ class App extends React.Component {
           playerStats: updatedPlayerStats,
           hurt: true,
         }, () => {
+          console.log(playerStats.health);
           if (playerStats.health === 0) {
             this.setState({
               dead: true,
@@ -291,7 +297,13 @@ class App extends React.Component {
         </div>
       );
     } if (dead) {
-      return <div className="dead">YOU HAVE DIED</div>;
+      Howler.stop();
+      return (
+        <div className="dead">
+          <img id="death" src="ash.gif" alt="death" />
+          <h2 id="dead">YOU HAVE DIED</h2>
+        </div>
+      );
     }
     return <Login createNewPlayer={this.createNewPlayer} loadGame={this.loadGame} />;
   }
