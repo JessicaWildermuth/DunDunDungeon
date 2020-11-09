@@ -13,9 +13,10 @@ class JukeBox extends React.Component {
     const { musicList, playSong } = this.props;
     return (
       <div id="music">
+        <img src="boxSelect.png" alt="musicBox" id="musicBox" />
         { musicList.map((song) => (
           <div>
-            <button className={song.title} type="button" onClick={playSong}>{song.title}</button>
+            <button className={song.id} type="button" onClick={playSong}>{song.title}</button>
           </div>
         ))}
       </div>

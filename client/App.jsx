@@ -29,7 +29,7 @@ class App extends React.Component {
       dead: false,
       level: 1,
       spellCast: false,
-      musicList: [{ title: 'LostWoods', src: 'LostWoods.mp3' }, { title: 'Memoraphile', src: 'memoraphile.mp3' }, { title: 'FrogTheme', src: 'FrogTheme.mp3' }, { title: 'MetalMix', src: 'MetalMix.mp3' }],
+      musicList: [{ title: 'Lost Woods', src: 'LostWoods.mp3', id: 'LostWoods' }, { title: 'Memoraphile', src: 'memoraphile.mp3', id: 'Memoraphile' }, { title: 'Frog Theme', src: 'Frog Theme.mp3', id: 'FrogTheme' }, { title: 'Metal Mix', src: 'MetalMix.mp3', id: 'MetalMix' }, { title: 'Eric\'s Request', src: 'Chocobo.mp3', id: 'Chocobo' }],
       hurt: false,
       win: false,
       // currentSong: null,
@@ -249,7 +249,7 @@ class App extends React.Component {
           src: 'dmg.mp3',
         });
         sound.play();
-        const updatePlayerHealth = playerStats.health - 0.25; // CHANGE BACK TO -0.5
+        const updatePlayerHealth = playerStats.health - 0.5; // CHANGE BACK TO -0.5
         const updatedPlayerStats = {
           level: playerStats.level, exp: playerStats.exp, health: updatePlayerHealth, name: playerStats.name,
         };
@@ -316,7 +316,7 @@ class App extends React.Component {
             </div>
           </div>
           <div id="save">
-            <button type="button" className="save" onClick={this.saveGame}>SAVE GAME</button>
+            <button type="button" id="hover" className="save" onClick={this.saveGame}>SAVE GAME</button>
           </div>
           <JukeBox musicList={musicList} playSong={this.playSong} />
         </div>

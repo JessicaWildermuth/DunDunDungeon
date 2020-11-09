@@ -56,7 +56,6 @@ h1 {
 button {
   position: absolute;
   top: 18%;
-  left: 30%;
   background-color: transparent;
   border: none;
   font-family: 'Dancing Script', cursive;
@@ -118,21 +117,21 @@ h3 {
 
 .playerHealth {
   position: relative;
-  top: 370px;
-  left: 298px;
+  top: 368px;
+  left: 299px;
   white-space: pre-wrap;
 }
 
 .playerExp {
   position: relative;
-  top: 406px;
+  top: 405px;
   left: 175px;
   white-space: pre-wrap;
 }
 
 .playerLevel {
   position: relative;
-  top: 444px;
+  top: 442px;
   left: 87px;
   white-space: pre-wrap;
 }
@@ -204,51 +203,66 @@ h3 {
   color: red;
 }
 
-.save {
-  left: 1250px;
-  position: absolute;
-  font-family: 'Nosifer', cursive;
-  color: red;
-}
+
 
 #music {
   color: red;
-  width: 100px;
+  width: 170px;
   position: absolute;
-  left: 75%;
-  height: 60%;
+  left: 80%;
+  height: 40%;
+  overflow: hidden;
+  top: 30%;
 }
 
 .LostWoods{
-  color: green;
+  color: silver;
   font-family: 'Nosifer', cursive;
   font-size: 10px;
-  top: 30%;
+  top: 20%;
   position: absolute;
+  z-index: 1;
+  left: 22%;
 }
 
 .MetalMix{
-  color: blue;
+  color: silver;
   font-family: 'Nosifer', cursive;
   font-size: 10px;
-  top: 50%;
+  top: 32%;
   position: absolute;
+  z-index: 1;
+  left: 25%;
 }
 
 .Memoraphile{
-  color: yellow;
+  color: silver;
+  font-family: 'Nosifer', cursive;
+  font-size: 10px;
+  top: 44%;
+  position: absolute;
+  z-index: 1;
+  left: 20%;
+}
+
+.FrogTheme {
+  color: silver;
+  font-family: 'Nosifer', cursive;
+  font-size: 10px;
+  top: 56%;
+  position: absolute;
+  z-index: 1;
+  left: 25%;
+}
+
+.Chocobo {
+  color: silver;
   font-family: 'Nosifer', cursive;
   font-size: 10px;
   top: 70%;
   position: absolute;
-}
-
-.FrogTheme {
-  color: green;
-  font-family: 'Nosifer', cursive;
-  font-size: 10px;
-  top: 90%;
-  position: absolute;
+  z-index: 1;
+  left: 18%;
 }
 
 #statsContainer {
@@ -265,7 +279,7 @@ h3 {
 
 #dragon {
   position: absolute;
-  left: 24%;
+  left: 27%;
 }
 
 h2 {
@@ -298,4 +312,59 @@ h2 {
   width: 100%;
   height: 815px;
   z-index: 10;
+}
+
+#hover {
+  font-size: 12px;
+  padding: 10px;
+  color: #f4f4f4;
+  text-transform: uppercase;
+}
+
+.save {
+  text-decoration: none;
+  border: 1px solid darkred;
+  position: relative;
+  overflow: hidden;
+  position: absolute;
+  left: 1180px;
+  font-family: 'Nosifer', cursive;
+  border: transparent;
+  background-color: darkred;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.save:hover {
+  box-shadow: 1px 1px 25px 10px red;
+}
+
+.save:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(146, 148, 248, 0.4),
+    transparent
+  );
+  transition: all 650ms;
+}
+
+.save:hover:before {
+  left: 100%;
+}
+
+#playerStatContainer {
+  height: 0;
+}
+
+#musicBox {
+  width: 100%;
+  height: 100%;
+  z-index: 0;
 }
