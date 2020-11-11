@@ -13,5 +13,6 @@ A Dungeon Crawler game demo built using React.
 * Player experience increments with each monster slain
 * Allow player to save game 
 * Allow player to load saved game 
+* Allow player to select background music from select pool of music
 
 
