@@ -81,7 +81,6 @@ class Monster extends Character {
     return setInterval(() => {
       const index = Math.floor(Math.random() * Math.floor(directions.length));
       this.move(directions[index]);
-      this.redraw();
     }, 100)
   }
 
