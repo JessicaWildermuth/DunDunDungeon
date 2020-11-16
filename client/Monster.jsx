@@ -11,48 +11,49 @@ class Monster extends React.Component {
     };
   }
 
-  componentDidMount() {
-    const directions = ['top', 'left', 'bottom', 'right'];
-    const { getLocation, monsters } = this.props;
-    this.monsterMovementInterval = setInterval(() => {
-      for (let i = 0; i < monsters.length; i += 1) {
-        const theMonster = monsters[i];
-        const index = Math.floor(Math.random() * Math.floor(directions.length));
-        const randomDirection = directions[index];
-        if (randomDirection === 'top') {
-          if (theMonster.location.top === 0 || theMonster.location.top === 1.5 || theMonster.location.top === 1) {
-            theMonster.location.top = 0;
-          } else {
-            theMonster.location.top -= 2;
-          }
-        } else if (randomDirection === 'bottom') {
-          if (theMonster.location.top === 90 || theMonster.location.top === 91.5 || theMonster.location.top === 91 || theMonster.location.top === 90.5) {
-            theMonster.location.top = 91.5;
-          } else {
-            theMonster.location.top += 2;
-          }
-        } else if (randomDirection === 'right') {
-          if (theMonster.location.left === 0 || theMonster.location.left === 1 || theMonster.location.left === 1.5) {
-            theMonster.location.left = 0;
-          } else {
-            theMonster.location.left -= 2;
-          }
-        } else if (randomDirection === 'left') {
-          if (theMonster.location.left >= 89) {
-            theMonster.location.left = 91.5;
-          } else {
-            theMonster.location.left += 2;
-          }
-        }
-        getLocation({
-          type: 'monster', top: theMonster.location.top, left: theMonster.location.left, index: i,
-        });
-      }
-    }, 100);
-  }
+  // componentDidMount() {
+    // const directions = ['top', 'left', 'bottom', 'right'];
+    // const { getLocation, monsters } = this.props;
+    // this.monsterMovementInterval = setInterval(() => {
+    //   for (let i = 0; i < monsters.length; i += 1) {
+    //     const theMonster = monsters[i];
+    //     const index = Math.floor(Math.random() * Math.floor(directions.length));
+    //     const randomDirection = directions[index];
+    //     if (randomDirection === 'top') {
+    //       if (theMonster.location.top === 0 || theMonster.location.top === 1.5 || theMonster.location.top === 1) {
+    //         theMonster.location.top = 0;
+    //       } else {
+    //         theMonster.location.top -= 2;
+    //       }
+    //     } else if (randomDirection === 'bottom') {
+    //       if (theMonster.location.top === 90 || theMonster.location.top === 91.5 || theMonster.location.top === 91 || theMonster.location.top === 90.5) {
+    //         theMonster.location.top = 91.5;
+    //       } else {
+    //         theMonster.location.top += 2;
+    //       }
+    //     } else if (randomDirection === 'right') {
+    //       if (theMonster.location.left === 0 || theMonster.location.left === 1 || theMonster.location.left === 1.5) {
+    //         theMonster.location.left = 0;
+    //       } else {
+    //         theMonster.location.left -= 2;
+    //       }
+    //     } else if (randomDirection === 'left') {
+    //       if (theMonster.location.left >= 89) {
+    //         theMonster.location.left = 91.5;
+    //       } else {
+    //         theMonster.location.left += 2;
+    //       }
+    //     }
+    //     getLocation({
+    //       type: 'monster', top: theMonster.location.top, left: theMonster.location.left, index: i,
+    //     });
+    //   }
+    // }, 100);
+  // }
 
   componentWillUnmount() {
-    if (this.monsterMovementInterval) clearInterval(this.monsterMovementInterval);
+    this.props.monsters.forEach(monster => monster.die())
+    // if (this.monsterMovementInterval) clearInterval(this.monsterMovementInterval);
   }
 
   render() {

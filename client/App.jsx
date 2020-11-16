@@ -14,6 +14,82 @@ import JukeBox from './JukeBox.jsx';
 import Winner from './Winner.jsx';
 import Death from './Death.jsx';
 
+class GameObject {
+  constructor(topOffset, leftOffset) {
+    const top = Math.floor(Math.random() * (91 - 0) + 0);
+    const left = Math.floor(Math.random() * (96 - 0) + 0);
+    this.location = {top, left}
+    this.topOffset = topOffset;
+    this.leftOffset = leftOffset;
+    this.center = {top: top + topOffset, left: left + leftOffset};
+  }
+
+  updateCenter() {
+    this.center.top = this.location.top + this.topOffset;
+    this.center.left = this.location.left + this.leftOffset;
+  }
+}
+
+class Spell extends GameObject {
+  constructor() {
+    const topOffset = 4;
+    const leftOffset = 4;
+    super(topOffset, leftOffset);
+    this.type = 'nova';
+    this.dmg = 1;
+  }
+}
+
+class Character extends GameObject {
+  constructor(topOffset, leftOffset, health, redraw) {
+    super(topOffset, leftOffset);
+    this.health = health;
+    this.redraw = redraw;
+  }
+
+  move(direction) {
+    if (direction === 'up') this.location.top -= 2;
+    if (direction === 'down') this.location.top += 2;
+    if (direction === 'left') this.location.left -= 2;
+    if (direction === 'right') this.location.left += 2;
+    this.correctOutOfBounds();
+    this.updateCenter();
+    this.redraw();
+  }
+
+  correctOutOfBounds() {
+    if (this.location.top < 0) this.location.top = 0;
+    if (this.location.top > 91.5) this.location.top = 91.5;
+    if (this.location.left < 0) this.location.left = 0;
+    if (this.location.left > 91.5) this.location.left = 91.5;
+  }
+}
+
+class Monster extends Character {
+  constructor(redraw) {
+    const monsterTop = Math.floor(Math.random() * (91 - 0) + 0);
+    const monsterLeft = Math.floor(Math.random() * (96 - 0) + 0);
+    const TOP_OFFSET = 4;
+    const LEFT_OFFSET = 4;
+    const health = 5;
+    super(TOP_OFFSET, LEFT_OFFSET, health, redraw);
+    this.movementInterval = this.createAutoMove();
+  }
+
+  createAutoMove() {
+    const directions = ['left', 'right', 'up', 'down'];
+    return setInterval(() => {
+      const index = Math.floor(Math.random() * Math.floor(directions.length));
+      this.move(directions[index]);
+      this.redraw();
+    }, 100)
+  }
+
+  die() {
+    clearInterval(this.movementInterval);
+  }
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -21,7 +97,7 @@ class App extends React.Component {
       playerLocation: null,
       playerCenter: null,
       playerSpells: [],
-      spells: [],
+      spells: [new Spell()],
       monsters: [],
       playerStats: {
         level: null, exp: null, health: null, name: null,
@@ -43,37 +119,32 @@ class App extends React.Component {
     this.saveGame = this.saveGame.bind(this);
     this.resetBlood = this.resetBlood.bind(this);
     this.playSong = this.playSong.bind(this);
+    this.redrawMonsters = this.redrawMonsters.bind(this);
   }
 
   componentDidMount() {
-    const { spells } = this.state;
-    const spellTop = Math.floor(Math.random() * (91 - 0) + 0);
-    const spellLeft = Math.floor(Math.random() * (91 - 0) + 0);
-    const spellLocation = { top: spellTop, left: spellLeft };
-    const spellTypes = [{ type: 'nova', dmg: 1 }];
-    const randomSpell = spellTypes[Math.floor(Math.random() * Math.floor(spellTypes.length))];
-    const updatedSpells = spells;
-    updatedSpells.push({
-      type: randomSpell.type, dmg: randomSpell.dmg, center: { top: spellLocation.top + 4, left: spellLocation.left + 4 }, location: spellLocation,
-    });
-    this.setState({
-      spells: updatedSpells,
-    });
+    // const { spells } = this.state;
+    // const spellTop = Math.floor(Math.random() * (91 - 0) + 0);
+    // const spellLeft = Math.floor(Math.random() * (91 - 0) + 0);
+    // const spellLocation = { top: spellTop, left: spellLeft };
+    // const spellTypes = [{ type: 'nova', dmg: 1 }];
+    // const randomSpell = spellTypes[Math.floor(Math.random() * Math.floor(spellTypes.length))];
+    // const updatedSpells = spells;
+    // updatedSpells.push({
+    //   type: randomSpell.type, dmg: randomSpell.dmg, center: { top: spellLocation.top + 4, left: spellLocation.left + 4 }, location: spellLocation,
+    // });
+    // this.setState({
+    //   spells: updatedSpells,
+    // });
 
     const { level } = this.state;
+    const monsters = [];
     for (let i = 0; i < level + 4; i += 1) {
-      const { monsters } = this.state;
-      const monsterTop = Math.floor(Math.random() * (91 - 0) + 0);
-      const monsterLeft = Math.floor(Math.random() * (96 - 0) + 0);
-      const monsterLocation = { top: monsterTop, left: monsterLeft };
-      const monsterCenter = { top: monsterTop + 4, left: monsterLeft + 4 };
-      const updatedMonsterList = monsters;
-      const monsterHealth = 5;
-      monsters.push({ location: monsterLocation, center: monsterCenter, health: monsterHealth });
-      this.setState({
-        monsters: updatedMonsterList,
-      });
+      monsters.push(new Monster(this.redrawMonsters));
     }
+    this.setState({
+      monsters: monsters,
+    });
   }
 
   getLocation(obj) {
@@ -82,16 +153,23 @@ class App extends React.Component {
       this.setState({
         playerCenter: center,
       });
-    } else if (obj.type === 'monster') {
-      const { monsters } = this.state;
-      const newMonsterList = monsters;
-      newMonsterList[obj.index].center = center;
-      this.setState({
-        monsters: newMonsterList,
-      });
     }
+    // else {
+    //   const { monsters } = this.state;
+    //   const newMonsterList = monsters;
+    //   newMonsterList[obj.index].center = center;
+    //   this.setState({
+    //     monsters: newMonsterList,
+    //   });
+    // }
     this.checkOverlap();
   }
+
+  redrawMonsters() {
+    const monsters = [...this.state.monsters];
+    this.setState({monsters});
+    this.checkOverlap();
+  };
 
   loadGame(gameData) {
     const playerTop = Math.floor(Math.random() * (91 - 0) + 0);
