@@ -1,8 +1,4 @@
-/* eslint-disable no-alert */
-/* eslint-disable no-console */
-/* eslint-disable array-callback-return */
-/* eslint-disable max-len */
-/* eslint-disable import/extensions */
+
 import React from 'react';
 import axios from 'axios';
 import { Howl, Howler } from 'howler';
